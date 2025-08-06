@@ -5,6 +5,8 @@ const launch = {
     mission : 'mission sindoor',
     customer: ['mayank', 'lakshita'],
     launchDate: new Date('2025-08-04'),
+    target:'pakistan',
+    rocket:'rafael',
     rocketType: 'Explorer-1S1',
     destination:'kepler-51',
     upcoming:true,
