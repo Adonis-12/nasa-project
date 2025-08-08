@@ -1,5 +1,8 @@
 const { getAllLaunches, createLaunch , abortLaunch } = require("../../models/launches.model");
 
+function httpGetAllLaunches(req,res){
+    res.status(200).json(getAllLaunches())
+}
 function httpGetAllLaunches(req, res) {
   res.status(200).json(getAllLaunches());
 }
@@ -36,14 +39,16 @@ function httpCreateLaunch(req, res) {
 }
 
 function httpAbortLaunch(req,res){
-    const launchId = Number(req.params.id)
-    
-    const aborted = abortLaunch(launchId)
-    if(abortLaunch){
-      res.json(aborted)
-    }
+  const launchId = Number(req.params.id)
+  const aborted = abortLaunch(launchId)
+  if(abortLaunch){
+    res.json(aborted)
+  }else{
+    res.json({
+      error: "failed to abort the mission"
+    })
+  }
 }
-
 module.exports = {
   httpGetAllLaunches,
   httpCreateLaunch,
