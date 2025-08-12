@@ -3,17 +3,21 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "install-client":"npm install --prefix client",
-    "install-server" : "npm install --prefix server",
+    "install-client": "npm install --prefix client",
+    "install-server": "npm install --prefix server",
     "install": "npm install-client && npm install-server",
-    "server" : "npm start --prefix server",
-    "client" : "npm start --prefix client",
-    "watch" : "npm run server & npm run client",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy" : "npm run build --prefix client && npm run server"
+    "server": "npm start --prefix server",
+    "client": "npm start --prefix client",
+    "watch": "npm run server & npm run client",
+    "test": "npm test --prefix server && npm test --prefix client",
+    "deploy": "npm run build --prefix client && npm run server"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "jest": "^30.0.5",
+    "supertest": "^7.1.4"
+  }
 }
