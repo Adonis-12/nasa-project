@@ -3,9 +3,6 @@ const { getAllLaunches, createLaunch , abortLaunch } = require("../../models/lau
 function httpGetAllLaunches(req,res){
     res.status(200).json(getAllLaunches())
 }
-function httpGetAllLaunches(req, res) {
-  res.status(200).json(getAllLaunches());
-}
 
 function httpCreateLaunch(req, res) {
   const launch = req.body;
