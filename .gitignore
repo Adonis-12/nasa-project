@@ -10,7 +10,7 @@
 
 # production
 /build
-
+/scaling
 # misc
 .DS_Store
 .env.local

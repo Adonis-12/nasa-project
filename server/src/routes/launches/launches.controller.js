@@ -1,7 +1,20 @@
-const { getAllLaunches, createLaunch , abortLaunch } = require("../../models/launches.model");
+const {
+  getAllLaunches,
+  createLaunch,
+  abortLaunch,
+} = require("../../models/launches.model");
 
-function httpGetAllLaunches(req,res){
-    res.status(200).json(getAllLaunches())
+function delay(duration) {
+  const startTime = Date.now();
+
+  while (Date.now() - startTime < duration) {
+    console.log(Date.now() - startTime);
+  }
+}
+
+function httpGetAllLaunches(req, res) {
+  delay(10000);
+  res.status(200).json(getAllLaunches());
 }
 
 function httpCreateLaunch(req, res) {
@@ -35,19 +48,19 @@ function httpCreateLaunch(req, res) {
   }
 }
 
-function httpAbortLaunch(req,res){
-  const launchId = Number(req.params.id)
-  const aborted = abortLaunch(launchId)
-  if(abortLaunch){
-    res.json(aborted)
-  }else{
+function httpAbortLaunch(req, res) {
+  const launchId = Number(req.params.id);
+  const aborted = abortLaunch(launchId);
+  if (abortLaunch) {
+    res.json(aborted);
+  } else {
     res.json({
-      error: "failed to abort the mission"
-    })
+      error: "failed to abort the mission",
+    });
   }
 }
 module.exports = {
   httpGetAllLaunches,
   httpCreateLaunch,
-  httpAbortLaunch
+  httpAbortLaunch,
 };
