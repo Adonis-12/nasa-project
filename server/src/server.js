@@ -1,5 +1,7 @@
 const http = require('http')
 
+const mongoose = require('mongoose')
+
 const {loadAllPlanets} = require('./models/planets.model')
 
 const app = require('./app')
@@ -8,10 +10,19 @@ const server = http.createServer(app)
 
 const PORT = process.env.PORT || 8000
 
+const MONGO_URL = 'mongodb+srv://adonis:OAdFmizYCsDskNkC@nasacluster.iyadyv2.mongodb.net/?retryWrites=true&w=majority&appName=NASACluster'
+
+mongoose.connection.once('open', () => {
+    console.log("Connected to mongoose server")
+})
+mongoose.connection.on('error', (err) => {
+    console.error("Failed to connect :",err)
+})
 async function startServer(){
+    await mongoose.connect(MONGO_URL)
     await loadAllPlanets()
     server.listen(PORT,() => {
         console.log(`The server is running on port number ${PORT}`)
     })
 }
-startServer();
+startServer()

@@ -15,6 +15,7 @@ async function httpGetLaunches() {
   return data.sort((a, b) => a.flightNumber - b.flightNumber);
 }
 
+// Posting launch
 async function httpSubmitLaunch(launch) {
   try {
     console.log(launch);

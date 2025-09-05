@@ -1,23 +1,26 @@
 const {
   getAllLaunches,
-  createLaunch,
+  scheduleLaunch,
+  launchExists,
   abortLaunch,
 } = require("../../models/launches.model");
 
-function delay(duration) {
-  const startTime = Date.now();
+// for  pm2 and clusters testing
 
-  while (Date.now() - startTime < duration) {
-    console.log(Date.now() - startTime);
-  }
+// function delay(duration) {
+//   const startTime = Date.now();
+
+//   while (Date.now() - startTime < duration) {
+//     console.log(Date.now() - startTime);
+//   }
+// }
+
+async function httpGetAllLaunches(req, res) {
+  const allLaunches = await getAllLaunches()
+   res.status(200).json(allLaunches);
 }
 
-function httpGetAllLaunches(req, res) {
-  delay(10000);
-  res.status(200).json(getAllLaunches());
-}
-
-function httpCreateLaunch(req, res) {
+async function httpCreateLaunch(req, res) {
   const launch = req.body;
 
   launch.launchDate = new Date(launch.launchDate);
@@ -36,25 +39,35 @@ function httpCreateLaunch(req, res) {
       error: "Date is invalid",
     });
   } else {
-    createLaunch(launch);
+    await scheduleLaunch(launch)
+    res.status(201).json(launch)
   }
 
-  if (createLaunch) {
-    res.status(201).json(launch);
-  } else {
-    res.json({
-      error: "failed to create the launch",
+//   if (scheduleLaunch) {
+//     res.status(201).json(launch);
+//   } else {
+//     res.json({
+//       error: "failed to create the launch",
+//     });
+//   }
+ }
+
+async function httpAbortLaunch(req, res) {
+  const launchId = Number(req.params.id)
+  const checkFlightNumber = await launchExists(launchId)
+  if(!checkFlightNumber){
+    res.status(400).json({
+      error : "Launch doesn't exists"
+    })
+  }
+  // const launchId = Number(req.params.id);
+  const aborted = await abortLaunch(launchId);
+  if (aborted) {
+    res.status(200).json({
+      ok : true
     });
-  }
-}
-
-function httpAbortLaunch(req, res) {
-  const launchId = Number(req.params.id);
-  const aborted = abortLaunch(launchId);
-  if (abortLaunch) {
-    res.json(aborted);
   } else {
-    res.json({
+    res.status(400).json({
       error: "failed to abort the mission",
     });
   }
@@ -64,3 +77,4 @@ module.exports = {
   httpCreateLaunch,
   httpAbortLaunch,
 };
+
