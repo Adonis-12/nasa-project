@@ -1,5 +1,7 @@
 const http = require('http')
 
+require('dotenv').config()
+
 const mongoose = require('mongoose')
 
 const {loadAllPlanets} = require('./models/planets.model')
@@ -10,7 +12,7 @@ const server = http.createServer(app)
 
 const PORT = process.env.PORT || 8000
 
-const MONGO_URL = 'mongodb+srv://adonis:OAdFmizYCsDskNkC@nasacluster.iyadyv2.mongodb.net/?retryWrites=true&w=majority&appName=NASACluster'
+const MONGO_URL = process.env.MONGO_URL
 
 mongoose.connection.once('open', () => {
     console.log("Connected to mongoose server")

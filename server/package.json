@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "start": "PORT=3001 node src/server.js",
+    "start": " node src/server.js",
     "watch": "nodemon src/server.js",
     "test": "jest"
   },
