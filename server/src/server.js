@@ -25,7 +25,6 @@ async function startServer(){
     await loadAllPlanets()
     server.listen(PORT,() => {
         console.log(`The server is running on port number ${PORT}`)
-        console.log(process.env)
     })
 }
 startServer()
